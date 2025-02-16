@@ -1,0 +1,58 @@
+# Project: game
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o crnd_texcontainter.o
+LINKOBJ  = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o crnd_texcontainter.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32 -lglu32 -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = game.exe
+CXXFLAGS = $(CXXINCS) -g3 -g
+CFLAGS   = $(INCS) -g3 -g
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+crenderer.o: crenderer.cpp
+	$(CPP) -c crenderer.cpp -o crenderer.o $(CXXFLAGS)
+
+cgame.o: cgame.cpp
+	$(CPP) -c cgame.cpp -o cgame.o $(CXXFLAGS)
+
+crnd_tex.o: crnd_tex.cpp
+	$(CPP) -c crnd_tex.cpp -o crnd_tex.o $(CXXFLAGS)
+
+cinput.o: cinput.cpp
+	$(CPP) -c cinput.cpp -o cinput.o $(CXXFLAGS)
+
+cobject.o: cobject.cpp
+	$(CPP) -c cobject.cpp -o cobject.o $(CXXFLAGS)
+
+cvisual_sprite.o: cvisual_sprite.cpp
+	$(CPP) -c cvisual_sprite.cpp -o cvisual_sprite.o $(CXXFLAGS)
+
+cwnd.o: cwnd.cpp
+	$(CPP) -c cwnd.cpp -o cwnd.o $(CXXFLAGS)
+
+cworld.o: cworld.cpp
+	$(CPP) -c cworld.cpp -o cworld.o $(CXXFLAGS)
+
+ctimer.o: ctimer.cpp
+	$(CPP) -c ctimer.cpp -o ctimer.o $(CXXFLAGS)
+
+crnd_texcontainter.o: crnd_texcontainter.cpp
+	$(CPP) -c crnd_texcontainter.cpp -o crnd_texcontainter.o $(CXXFLAGS)

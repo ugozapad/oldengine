@@ -1,0 +1,6 @@
+beginwnd main
+posx 0
+posy 0
+sizex 1280
+sizey 720
+end
