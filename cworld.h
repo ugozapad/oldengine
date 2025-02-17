@@ -32,6 +32,7 @@ public:
 	void Render();
 	
 	void InsertObject(CObject* object);
+	void RemoveObject(CObject* object);
 
 private:
 	CArray<CObject*> objects;

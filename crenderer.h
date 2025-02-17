@@ -28,8 +28,8 @@ enum ERenderFlags
 
 enum EVertexBufferFlags
 {
-	VERTEX_BUFFER_STATIC,
-	VERTEX_BUFFER_DYNAMIC,
+	VERTEX_BUFFER_STATIC, 		/* Buffer content will never change. */
+	VERTEX_BUFFER_DYNAMIC,		/* Buffer requires dynamic memory usage and allow writting in to it.  */
 	VERTEX_BUFFER_MAX
 };
 

@@ -182,3 +182,18 @@ void CWorld::InsertObject(CObject* object)
 
 	objects.Add( object ); 
 }
+
+void CWorld::RemoveObject(CObject* object)
+{
+	assert( object );
+
+	// if object already added
+	if ( !objects.Contains( object ) )
+	{
+		assert( object && "Trying to remove unknowed object" );
+		return;
+	}
+	
+	int idx = objects.IndexOf(object);
+	objects.Remove(idx);
+}
