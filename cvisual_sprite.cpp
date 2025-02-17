@@ -16,13 +16,13 @@ void CVisual_Sprite::Render(const SRenderData* rnd_data)
 	float x = 0.f;
 	float y = 0.f;
 	
-	float rz = 0.0f;
+	float angle = 0.0f;
 	
 	if (rnd_data)
 	{
 		x=rnd_data->position.x;
 		y=rnd_data->position.y;
-		rz=rnd_data->rotation.z;
+		angle=rnd_data->rotation.z;
 	}
 	
 	static bool calc_anchor = false;
@@ -42,7 +42,7 @@ void CVisual_Sprite::Render(const SRenderData* rnd_data)
 	
 	renderer->SetAlphaBlend(true);
 	//renderer->DrawTexture(texture, x, y, w, h);
-	renderer->DrawTextureRot(texture, x, y, w, h, 0.f, 0.f, rz);
+	renderer->DrawTextureRot(texture, x, y, w, h, angle);
 	renderer->SetAlphaBlend(false);
 }
 

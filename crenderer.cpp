@@ -145,7 +145,7 @@ void CRenderer::DrawTexture(CTexture* texture, float x, float y, float w, float 
 	glLoadIdentity();
 }
 
-void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float rx, float ry, float rz)
+void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle)
 {
 	SetTexture(texture);	
 	
@@ -155,9 +155,7 @@ void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, flo
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef( rx, 1.0f, 0.0f, 0.0f );
-	glRotatef( ry, 0.0f, 1.0f, 0.0f );
-	glRotatef( rz, 0.0f, 0.0f, 1.0f );
+	glRotatef(angle, 0.0f, 0.0f, 1.0f );
 	
 	glBegin(GL_QUADS);
   		glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y); 

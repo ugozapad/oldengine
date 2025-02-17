@@ -179,7 +179,7 @@ public:
 	void DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount);
 	void DrawTile(CTexture* texture, float x, float y, float w, float h, float s1, float t1, float s2, float t2);
     void DrawTexture(CTexture* texture, float x, float y, float w, float h);
-    void DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float rx, float ry, float rz);
+    void DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle);
     void DrawTexture3D(CTexture* texture, float x, float y, float w, float h);
 
     void SetAlphaBlend(bool enable);
