@@ -32,9 +32,10 @@ public:
 	void OpenHUD();
 	void CloseHUD();
 
-private:
+public:
 	CWndBase* m_pCursor;
 
+private:
 	CWndBase* m_pMainMenu;
 	CWndButton* m_pNewGameButton;
 

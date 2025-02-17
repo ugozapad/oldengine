@@ -26,7 +26,6 @@ void CFrontend::Init()
 {
 	m_pCursor = new CWndBase();
 	m_pCursor->SetTexture("data/textures/ui_cursor.png");
-	g_pDesktop->AddChildren(m_pCursor);
 
 	m_pMainMenu = new CWndBase();
 	m_pMainMenu->SetTexture("data/textures/mainbg.jpg");
@@ -68,8 +67,6 @@ void CFrontend::Shutdown()
 		delete m_pNewGameButton; m_pNewGameButton = NULL;
 		delete m_pMainMenu; m_pMainMenu = NULL;
 	}
-
-	g_pDesktop->RemoveChildren(m_pCursor);
 }
 
 void CFrontend::Update()
@@ -194,4 +191,7 @@ void CGame::Render()
 	
 	// Draw UI
 	g_pDesktop->Render();
+
+	// draw cursor
+	frontend.m_pCursor->Render();
 }

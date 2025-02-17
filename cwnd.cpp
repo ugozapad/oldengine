@@ -101,7 +101,7 @@ void CWndBase::AddChildren(CWndBase* pWnd)
 	// if children already added
 	if ( m_Children.Contains( pWnd ) )
 	{
-		assert( pWnd && "Trying to add already added wnd" );
+		assert( !pWnd && "Trying to add already added wnd" );
 		return;
 	}
 
