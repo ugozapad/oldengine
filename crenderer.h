@@ -23,7 +23,7 @@ enum EVisualType
 enum ERenderFlags
 {
 	RENDER_2DFX_HIGHLIGHT = 1 << 1,
-
+	RENDER_BLACK_AS_ALPHA = 1 << 2,
 };
 
 enum EVertexBufferFlags
@@ -188,8 +188,8 @@ public:
     void SetTexture(CTexture* texture);
 
 	// Render Flags
-	void Set2DHighlight(bool enable) { enable ? flags |= RENDER_2DFX_HIGHLIGHT : flags &= ~RENDER_2DFX_HIGHLIGHT;  }
-
+	void Set2DHighlight(bool enable) { enable ? flags |= RENDER_2DFX_HIGHLIGHT : flags &= ~RENDER_2DFX_HIGHLIGHT; UpdateRendererState(); }
+	void SetBlackAlpha(bool enable) { enable ? flags |= RENDER_BLACK_AS_ALPHA : flags &= ~RENDER_BLACK_AS_ALPHA; UpdateRendererState(); }
     
 	void BeginFrame();
 	void EndFrame();
@@ -205,6 +205,8 @@ public:
     CTexture* CreateTexture();
 	CVertexBuffer* CreateVertexBuffer();
 
+private:
+	void UpdateRendererState();
 
 private:
 	SViewport viewport;

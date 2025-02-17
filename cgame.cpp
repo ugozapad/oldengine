@@ -10,9 +10,11 @@ CGame* game = NULL;
 
 CFrontend::CFrontend()
 {
+	m_pCursor = NULL;
 	m_pMainMenu = NULL;
 	m_pNewGameButton = NULL;
 	m_pHealthImage= NULL;
+	m_pHealthText = NULL;
 }
 
 CFrontend::~CFrontend()
@@ -22,6 +24,10 @@ CFrontend::~CFrontend()
 
 void CFrontend::Init()
 {
+	m_pCursor = new CWndBase();
+	m_pCursor->SetTexture("data/textures/ui_cursor.png");
+	g_pDesktop->AddChildren(m_pCursor);
+
 	m_pMainMenu = new CWndBase();
 	m_pMainMenu->SetTexture("data/textures/mainbg.jpg");
 
@@ -34,15 +40,26 @@ void CFrontend::Init()
 	m_pMainMenu->AddChildren(m_pNewGameButton);
 
 	// HUD
-	
+	float width = 95.0f;
+	float height = (float)viewport.height - 50.0f;
 	m_pHealthImage = new CWndBase();
 	m_pHealthImage->SetTexture("data/textures/health.png");
-	m_pHealthImage->SetPosition(200.0f, 200.0f);
+	m_pHealthImage->SetPosition(width, height);
 	m_pHealthImage->SetSize(128.0f, 128.0f);
+	m_pHealthImage->CalculateAnchorCenter();
+
+	m_pHealthText = new CWndBase();
+	m_pHealthText->SetPosition(m_pHealthImage->m_Position.x + m_pHealthImage->m_Size.x, height - 5.0f);
+	m_pHealthText->SetSize(128.0f, 128.0f);
+	m_pHealthText->SetText("100");
 }
 
 void CFrontend::Shutdown()
 {
+	if (!g_pDesktop)
+		return;
+
+	delete m_pHealthText; m_pHealthText = NULL;
 	delete m_pHealthImage; m_pHealthImage = NULL;
 
 	if (m_pMainMenu)
@@ -51,6 +68,16 @@ void CFrontend::Shutdown()
 		delete m_pNewGameButton; m_pNewGameButton = NULL;
 		delete m_pMainMenu; m_pMainMenu = NULL;
 	}
+
+	g_pDesktop->RemoveChildren(m_pCursor);
+}
+
+void CFrontend::Update()
+{
+	int x, y;
+	input->GetMousePos(&x, &y);
+	m_pCursor->m_Position.x = (float)x;
+	m_pCursor->m_Position.y = (float)y;
 }
 
 void CFrontend::OpenMainMenu()
@@ -66,10 +93,12 @@ void CFrontend::CloseMainMenu()
 void CFrontend::OpenHUD()
 {
 	g_pDesktop->AddChildren(m_pHealthImage);
+	g_pDesktop->AddChildren(m_pHealthText);
 }
 
 void CFrontend::CloseHUD()
 {
+	g_pDesktop->RemoveChildren(m_pHealthText);
 	g_pDesktop->RemoveChildren(m_pHealthImage);
 }
 
@@ -98,13 +127,15 @@ void CGame::Init()
 	g_pDesktop->SetSize((float)viewport.width, (float)viewport.height);
 
 	frontend.Init();
-	//frontend.OpenHUD();
+	frontend.OpenHUD();
 	
 	LoadWorld("data/levels/test.txt");
 }
 
 void CGame::Shutdown()
 {
+	frontend.CloseHUD();
+	frontend.CloseMainMenu();
 	frontend.Shutdown();
 
 	delete g_pDesktop; g_pDesktop = NULL;
@@ -152,6 +183,8 @@ void CGame::LoadWorld(const char* filename)
 void CGame::Update()
 {
 	world->Update();
+
+	frontend.Update();
 }
 
 void CGame::Render()

@@ -1,5 +1,6 @@
 #include "cwnd.h"
 #include "crenderer.h"
+#include "cfontmanager.h"
 
 CWndBase* g_pDesktop = NULL;
 
@@ -15,6 +16,7 @@ CWndBase::CWndBase(void)
 
 CWndBase::~CWndBase(void)
 {
+	m_Text.Clear();
 	m_Children.RemoveAll();
 
 	m_pTexture = NULL;
@@ -30,8 +32,14 @@ void CWndBase::Render()
 		if (Flags & WNDFLAG_TRANSPARENT)
 			renderer->SetAlphaBlend(true);
 
-		renderer->DrawTexture(m_pTexture, m_Position.x, m_Position.y,
+		renderer->DrawTexture(m_pTexture, m_Position.x, m_Position.y, 
 			m_Size.x, m_Size.y);
+	}
+
+	// render text
+	if (!m_Text.IsEmpty())
+	{
+		fontman.sysfont->Print(m_Position.x, m_Position.y, m_Text.GetText());
 	}
 
 	// render children
@@ -63,6 +71,11 @@ void CWndBase::SetTexture(const char* filename)
 	AutoResize();
 }
 
+void CWndBase::SetText(const char* text)
+{
+	m_Text = text;
+}
+
 void CWndBase::AutoResize()
 {
 	if (!m_pTexture)
@@ -73,6 +86,12 @@ void CWndBase::AutoResize()
 
 	m_Size.x = (float)m_pTexture->GetWidth();
 	m_Size.y = (float)m_pTexture->GetHeight();
+}
+
+void CWndBase::CalculateAnchorCenter()
+{
+	m_Position.x = m_Position.x - (m_Size.x * 0.5f);
+	m_Position.y = m_Position.y - (m_Size.y * 0.5f);
 }
 
 void CWndBase::AddChildren(CWndBase* pWnd)

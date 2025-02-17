@@ -3,11 +3,11 @@
 
 #include "cmath.h"
 #include "carray.h"
+#include "cstr.h"
 
 enum EWndFlags
 {
 	WNDFLAG_TRANSPARENT = 1 << 1,
-
 };
 
 class CTexture;
@@ -23,8 +23,11 @@ public:
 	void SetPosition(float x, float y);
 	void SetSize(float x, float y);
 	void SetTexture(const char* filename);
+	void SetText(const char* text);
 
 	void AutoResize();
+	void CalculateAnchorCenter();
+	
 
 	void AddChildren(CWndBase* pWnd);
 	void RemoveChildren(CWndBase* pWnd);
@@ -32,6 +35,7 @@ public:
 public:
 	CArray<CWndBase*> m_Children;
 	CTexture* m_pTexture;
+	CStr m_Text;
 	Vec2 m_Position;
 	Vec2 m_Size;
 };

@@ -22,6 +22,8 @@ public:
 	void Init();
 	void Shutdown();
 
+	void Update();
+
 	// Main Menu
 	void OpenMainMenu();
 	void CloseMainMenu();
@@ -31,10 +33,13 @@ public:
 	void CloseHUD();
 
 private:
+	CWndBase* m_pCursor;
+
 	CWndBase* m_pMainMenu;
 	CWndButton* m_pNewGameButton;
 
 	CWndBase* m_pHealthImage;
+	CWndBase* m_pHealthText;
 };
 
 class CGame

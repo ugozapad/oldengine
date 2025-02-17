@@ -5,6 +5,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "crenderer.h"
+#include "cfontmanager.h"
 
 // Visuals
 #include "cvisual_sprite.h"
@@ -66,6 +67,9 @@ void CRenderer::Init(void* window)
 	/* Initialize texture container */
 	texcontainer = new CTextureContainer();
 
+	/* Initialize font manager */
+	fontman.Init();
+
     /* Write GPU stuff */
     printf("%s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
     printf("OpenGL ver. %s\n", glGetString(GL_VERSION));
@@ -90,6 +94,9 @@ void CRenderer::Init(void* window)
 
 void CRenderer::Shutdown()
 {
+	/* Destroy font manager */
+	fontman.Shutdown();
+
 	/* Destroy texture containter */
 	delete texcontainer; texcontainer = NULL;
 
@@ -252,6 +259,14 @@ CTexture* CRenderer::CreateTexture()
 CVertexBuffer* CRenderer::CreateVertexBuffer()
 {
 	return new CVertexBuffer();
+}
+
+void CRenderer::UpdateRendererState()
+{
+	if (flags & RENDER_BLACK_AS_ALPHA)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	else
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 ////////////////////

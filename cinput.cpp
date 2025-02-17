@@ -28,6 +28,8 @@ void CInput::Update()
 	GetCursorPos(&pt);
 	mouseX = (int)pt.x;
 	mouseY = (int)pt.y;
+
+	ShowCursor(0);
 }
 
 void CInput::OnKeyAction(int key, bool action)
