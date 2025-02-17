@@ -4,6 +4,8 @@
 
 CWndBase* g_pDesktop = NULL;
 
+bool CWndBase::ms_bDrawDebug = true;
+
 CWndBase::CWndBase(void)
 {
 	m_pTexture = NULL;
@@ -42,6 +44,14 @@ void CWndBase::Render()
 		fontman.sysfont->Print(m_Position.x, m_Position.y, m_Text.GetText());
 	}
 
+	// draw debug rect
+	if (ms_bDrawDebug)
+	{
+		renderer->DrawRectColoredWire(m_Position.x, m_Position.y,
+			m_Size.x, m_Size.y,
+			0xff0000ff);
+	}
+
 	// render children
 	int numChildren = m_Children.GetSize();
 	for (int i = 0; i < numChildren; i++)
@@ -74,18 +84,32 @@ void CWndBase::SetTexture(const char* filename)
 void CWndBase::SetText(const char* text)
 {
 	m_Text = text;
+
+	// #TODO: FLAG ???
+	AutoResize();
 }
 
 void CWndBase::AutoResize()
 {
-	if (!m_pTexture)
+	if (m_Text.IsEmpty())
 	{
-//		printf("CWndBase::AutoResize: canno't resize without texture\n");
-		return;
+		//printf("CWndBase::AutoResize: canno't resize without text\n");
+	}
+	else
+	{
+		m_Size.x = fontman.sysfont->GetTextWidth(m_Text.GetText());
+		m_Size.y = -fontman.sysfont->GetSymbolHeight();
 	}
 
-	m_Size.x = (float)m_pTexture->GetWidth();
-	m_Size.y = (float)m_pTexture->GetHeight();
+	if (m_pTexture)
+	{
+		m_Size.x = (float)m_pTexture->GetWidth();
+		m_Size.y = (float)m_pTexture->GetHeight();
+	}
+	else
+	{
+		//printf("CWndBase::AutoResize: canno't resize without texture\n");
+	}
 }
 
 void CWndBase::CalculateAnchorCenter()

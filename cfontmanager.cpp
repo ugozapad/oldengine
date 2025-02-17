@@ -310,3 +310,24 @@ void CFont::Print(float x, float y, const char* text)
 
 	renderer->SetBlackAlpha(false);
 }
+
+float CFont::GetTextWidth(const char* text)
+{
+	float width = 0.0f;
+	for (; *text; text++)
+	{
+		unsigned char c = *text;
+		if (c == 13) continue;
+		if (c == 10)
+		{
+			width = 0.0f;
+			continue;
+		}
+
+		const float fW = (chars[c - ASCII_START].maxx - chars[c - ASCII_START].minx) * MAX_FONT_TEX_WIDTH;
+		const float fH = (chars[c - ASCII_START].maxy - chars[c - ASCII_START].miny) * MAX_FONT_TEX_HEIGHT;
+		width += fW;
+	}
+
+	return width;
+}

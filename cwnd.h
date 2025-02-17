@@ -33,6 +33,8 @@ public:
 	void RemoveChildren(CWndBase* pWnd);
 
 public:
+	static bool ms_bDrawDebug;
+
 	CArray<CWndBase*> m_Children;
 	CTexture* m_pTexture;
 	CStr m_Text;

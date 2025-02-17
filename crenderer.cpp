@@ -116,9 +116,36 @@ void CRenderer::DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount)
 	vbuf->Unbind();
 }
 
+void CRenderer::DrawRectColoredWire(float x, float y, float w, float h, uint color)
+{
+	SetTexture(NULL);
+
+	glPolygonMode(GL_BACK, GL_LINE);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho((float)viewport.x, (float)viewport.width, (float)viewport.height, (float)viewport.y, -1.0f, 1.0f);
+
+	glPushAttrib(GL_CURRENT_BIT);
+	glColor4ubv((const GLubyte*)&color);
+
+	glBegin(GL_QUADS);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y + h);
+		glVertex2f(x, y + h);
+	glEnd();
+
+	glPopAttrib();
+
+	glLoadIdentity();
+}
+
 void CRenderer::DrawTile(CTexture* texture, float x, float y, float w, float h, float s1, float t1, float s2, float t2)
 {
-	SetTexture(texture);	
+	SetTexture(texture);
+
+	glPolygonMode(GL_BACK, GL_FILL);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -136,7 +163,9 @@ void CRenderer::DrawTile(CTexture* texture, float x, float y, float w, float h, 
 
 void CRenderer::DrawTexture(CTexture* texture, float x, float y, float w, float h)
 {
-	SetTexture(texture);	
+	SetTexture(texture);
+	
+	glPolygonMode(GL_BACK, GL_FILL);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -156,6 +185,8 @@ void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, flo
 {
 	SetTexture(texture);	
 	
+	glPolygonMode(GL_BACK, GL_FILL);
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho((float)viewport.x, (float)viewport.width, (float)viewport.height, (float)viewport.y, -1.0f, 1.0f);
@@ -181,6 +212,8 @@ void CRenderer::DrawTexture3D(CTexture* texture, float x, float y, float w, floa
 {
 	SetTexture(texture);	
 	
+	glPolygonMode(GL_BACK, GL_FILL);
+
 	// Change model matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

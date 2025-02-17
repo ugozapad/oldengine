@@ -177,6 +177,7 @@ public:
     
     // Rendering
 	void DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount);
+	void DrawRectColoredWire(float x, float y, float w, float h, uint color);
 	void DrawTile(CTexture* texture, float x, float y, float w, float h, float s1, float t1, float s2, float t2);
     void DrawTexture(CTexture* texture, float x, float y, float w, float h);
     void DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle);

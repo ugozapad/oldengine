@@ -30,7 +30,8 @@ public:
 
 	void Print(float x, float y, const char* text);
 
-	inline float GetSymbolHeight() { return chars[0].maxy - chars[0].miny * MAX_FONT_TEX_HEIGHT; }
+	inline float GetSymbolHeight() { return chars['A' - ASCII_START].maxy - chars['A' - ASCII_START].miny * MAX_FONT_TEX_HEIGHT; }
+	float GetTextWidth(const char* text);
 };
 
 class CFontManager
