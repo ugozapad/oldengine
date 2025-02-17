@@ -1,7 +1,7 @@
 [Project]
 FileName=game.dev
 Name=game
-UnitCount=26
+UnitCount=29
 Type=0
 Ver=2
 ObjFiles=
@@ -26,8 +26,8 @@ UseCustomMakefile=0
 CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=1
-CompilerSettings=0000000000000000001000000
+CompilerSet=0
+CompilerSettings=0000000000000000000000000
 LogOutput=
 LogOutputEnabled=0
 
@@ -261,16 +261,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=crnd_texcontainter.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit23]
 FileName=camera.h
 CompileCpp=1
 Folder=
@@ -280,7 +270,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit23]
 FileName=camera.cpp
 CompileCpp=1
 Folder=
@@ -290,7 +280,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit24]
 FileName=cplayer.h
 CompileCpp=1
 Folder=
@@ -300,8 +290,48 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit25]
 FileName=cplayer.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=crnd_texcontainer.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=cmodel.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit28]
+FileName=cmodel.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit29]
+FileName=crnd_vbuf.cpp
 CompileCpp=1
 Folder=
 Compile=1

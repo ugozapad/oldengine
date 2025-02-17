@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include "cgame.h"
-#include "crenderer.h"
-#include "cinput.h"
 #include "ctimer.h"
+#include "cinput.h"
+#include "crenderer.h"
 #include "cwnd.h"
+#include "cgame.h"
+#include "cworld.h"
 
 CGame* game = NULL;
 
@@ -72,12 +73,19 @@ void CFrontend::CloseHUD()
 	g_pDesktop->RemoveChildren(m_pHealthImage);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 CGame::CGame()
 {
+	world = NULL;
 }
 
 CGame::~CGame()
 {
+	if (world)
+	{
+		delete world; world = NULL;
+	}
 }
 
 void CGame::Init()
@@ -91,6 +99,8 @@ void CGame::Init()
 
 	frontend.Init();
 	//frontend.OpenHUD();
+	
+	LoadWorld("data/levels/test.txt");
 }
 
 void CGame::Shutdown()
@@ -100,12 +110,55 @@ void CGame::Shutdown()
 	delete g_pDesktop; g_pDesktop = NULL;
 }
 
+void CGame::LoadWorld(const char* filename)
+{
+	static char worldFilename[260 + 1];
+	strcpy(worldFilename, filename);
+	
+	printf("Loading world %s\n", filename);
+	
+	// Check for file
+	FILE* file = fopen(worldFilename, "rb");
+	if (!file)
+	{
+		// check for compiled world
+		sprintf(worldFilename, "data/worlds/%s.cwf", filename);
+		file = fopen(worldFilename, "rb");
+		if (!file)
+		{
+			// check for raw world
+			sprintf(worldFilename, "data/worlds/%s.txt", filename);
+			file = fopen(worldFilename, "r");
+			if (!file)
+			{
+				printf("CGame::LoadWorld: World '%s' is not found\n", filename);
+				return;
+			}
+		}
+	}
+	
+	fclose(file);
+	
+	static bool s_worldTransition = false;
+	if (!s_worldTransition)
+	{
+		if (world) delete world;
+		
+		world = new CWorld();
+		world->LoadWorld(worldFilename);
+	}
+}
+
 void CGame::Update()
 {
+	world->Update();
 }
 
 void CGame::Render()
 {
+	// render world
+	world->Render();
+	
 	// Draw UI
 	g_pDesktop->Render();
 }

@@ -1,0 +1,8 @@
+BeginObject unnamed
+ClassName CObject
+Position 100 100 0
+Rotation 0 0 0
+Visual data/textures/koshka1.jpg
+EndObject
+
+# EOL

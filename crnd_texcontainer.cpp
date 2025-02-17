@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include "crenderer.h"
 
@@ -35,6 +36,8 @@ CTexture* CTextureContainer::LoadTexture(const char* filename)
 	}
 
 	// create texture
+
+	printf("Uncached loading : %s\n", filename);
 
 	CTexture* texture = renderer->CreateTexture();
 	texture->LoadFromFile(filename);

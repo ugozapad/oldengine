@@ -2,6 +2,7 @@
 #define CGAME_H
 
 // forward declaration
+class CWorld;
 class CWndBase;
 class CWndButton;
 
@@ -48,6 +49,11 @@ public:
 	void Update();
 
 	void Render();
+	
+	void LoadWorld(const char* filename);
+
+public:
+	CWorld* world;
 
 private:
 	CFrontend frontend;

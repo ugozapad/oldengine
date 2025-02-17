@@ -1,17 +1,17 @@
 # Project: game
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
+CPP      = g++.exe
+CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o crnd_texcontainter.o
-LINKOBJ  = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o crnd_texcontainter.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32 -lglu32 -g3
+OBJ      = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o
+LINKOBJ  = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32 -lglu32
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = game.exe
-CXXFLAGS = $(CXXINCS) -g3 -g
-CFLAGS   = $(INCS) -g3 -g
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -54,5 +54,17 @@ cworld.o: cworld.cpp
 ctimer.o: ctimer.cpp
 	$(CPP) -c ctimer.cpp -o ctimer.o $(CXXFLAGS)
 
-crnd_texcontainter.o: crnd_texcontainter.cpp
-	$(CPP) -c crnd_texcontainter.cpp -o crnd_texcontainter.o $(CXXFLAGS)
+camera.o: camera.cpp
+	$(CPP) -c camera.cpp -o camera.o $(CXXFLAGS)
+
+cplayer.o: cplayer.cpp
+	$(CPP) -c cplayer.cpp -o cplayer.o $(CXXFLAGS)
+
+crnd_texcontainer.o: crnd_texcontainer.cpp
+	$(CPP) -c crnd_texcontainer.cpp -o crnd_texcontainer.o $(CXXFLAGS)
+
+cmodel.o: cmodel.cpp
+	$(CPP) -c cmodel.cpp -o cmodel.o $(CXXFLAGS)
+
+crnd_vbuf.o: crnd_vbuf.cpp
+	$(CPP) -c crnd_vbuf.cpp -o crnd_vbuf.o $(CXXFLAGS)

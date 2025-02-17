@@ -1,6 +1,8 @@
 #ifndef CMATH_H
 #define CMATH_H
 
+#include <math.h>
+
 struct Vec2
 {
 	float x, y;
