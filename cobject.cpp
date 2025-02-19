@@ -13,6 +13,7 @@ CObject::CObject()
 	
 	memset(&position, 0, sizeof(position));
 	memset(&rotation, 0, sizeof(rotation));
+	scale = 1.0f;
 }
 
 CObject::~CObject()

@@ -5,4 +5,12 @@ Rotation 0 0 0
 Visual data/textures/koshka1.jpg
 EndObject
 
+BeginObject unnamed
+ClassName CPlayer
+Position 100 100 0
+Rotation 0 0 0
+Visual data/textures/pc.png
+EndObject
+
+
 # EOL

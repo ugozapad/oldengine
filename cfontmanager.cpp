@@ -9,6 +9,7 @@ CFontManager fontman;
 CFontManager::CFontManager(void)
 {
 	sysfont = NULL;
+	textfont = NULL;
 }
 
 CFontManager::~CFontManager(void)
@@ -34,10 +35,14 @@ void CFontManager::Init()
 
 	sysfont = new CFont();
 	sysfont->Load("data/systemfont.fnt");
+	
+	textfont = new CFont();
+	textfont->Load("data/textfont.fnt");
 }
 
 void CFontManager::Shutdown()
 {
+	delete textfont; textfont = NULL;
 	delete sysfont; sysfont = NULL;
 }
 
@@ -290,7 +295,7 @@ void CFont::Print(float x, float y, const char* text)
 		if (c == 10)
 		{
 			x2 = x;
-			y2 += symbolHeight;
+			y2 -= symbolHeight;
 			width = 0.0f;
 			continue;
 		}

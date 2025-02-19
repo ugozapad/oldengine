@@ -1,17 +1,17 @@
 # Project: game
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o
-LINKOBJ  = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32 -lglu32
+OBJ      = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o cfontmanager.o crnd_d3d7.o
+LINKOBJ  = main.o crenderer.o cgame.o crnd_tex.o cinput.o cobject.o cvisual_sprite.o cwnd.o cworld.o ctimer.o camera.o cplayer.o crnd_texcontainer.o cmodel.o crnd_vbuf.o cfontmanager.o crnd_d3d7.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32 -lglu32 -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = game.exe
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -68,3 +68,9 @@ cmodel.o: cmodel.cpp
 
 crnd_vbuf.o: crnd_vbuf.cpp
 	$(CPP) -c crnd_vbuf.cpp -o crnd_vbuf.o $(CXXFLAGS)
+
+cfontmanager.o: cfontmanager.cpp
+	$(CPP) -c cfontmanager.cpp -o cfontmanager.o $(CXXFLAGS)
+
+crnd_d3d7.o: crnd_d3d7.cpp
+	$(CPP) -c crnd_d3d7.cpp -o crnd_d3d7.o $(CXXFLAGS)

@@ -19,7 +19,7 @@ public:
 	CObject();
 	~CObject();
 
-	void Update();
+	virtual void Update();
 
 	void LoadVisual(const char* filename);
 	
@@ -27,6 +27,7 @@ public:
 	CVisual* visual;
 	Vec3 position;
 	Vec3 rotation;
+	float scale;
 };
 
 class CObjectFactory

@@ -47,6 +47,7 @@ public:
 
 public:
 	CFont* sysfont;
+	CFont* textfont;
 };
 
 extern CFontManager fontman;

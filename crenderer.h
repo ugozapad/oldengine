@@ -60,6 +60,7 @@ struct SRenderData
 {
 	Vec3 position;
 	Vec3 rotation;
+	float scale;
 };
 
 /*
@@ -181,6 +182,7 @@ public:
 	void DrawTile(CTexture* texture, float x, float y, float w, float h, float s1, float t1, float s2, float t2);
     void DrawTexture(CTexture* texture, float x, float y, float w, float h);
     void DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle);
+    void DrawTextureRotScale(CTexture* texture, float x, float y, float w, float h, float angle, float scale);
     void DrawTexture3D(CTexture* texture, float x, float y, float w, float h);
 
     void SetAlphaBlend(bool enable);

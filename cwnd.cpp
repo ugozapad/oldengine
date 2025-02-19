@@ -159,3 +159,31 @@ void CWndButton::Render()
 {
 	CWndBase::Render();
 }
+
+CWndDebugText debugText;
+
+CWndDebugText::CWndDebugText()
+{
+}
+
+CWndDebugText::~CWndDebugText()
+{
+}
+
+void CWndDebugText::AddText(const char* text)
+{
+	
+}
+
+void CWndDebugText::Render()
+{
+	CWndBase::Render();
+	
+	/*
+	int numStrings = m_Strings.GetSize();
+	float width 
+	for (int i = 0; i < )
+	
+	m_Strings.RemoveAll();
+	*/
+}

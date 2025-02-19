@@ -3,6 +3,7 @@
 #include "cobject.h"
 #include "crenderer.h"
 #include "ctimer.h"
+#include "cplayer.h"
 
 CWorld::CWorld()
 {
@@ -139,7 +140,11 @@ void CWorld::Update()
 	for (int i = 0; i < numObjects; i++)
 	{
 		CObject* object = objects[i];
-		if (object)
+		
+		CPlayer* player = dynamic_cast<CPlayer*>(object);
+		if (player)
+			player->Update();
+		else if (object)
 			object->Update();
 	}
 }
@@ -165,6 +170,8 @@ void CWorld::Render()
 		//	renderData.rotation.z = sin(test) * 200.f;
 			
 		//	renderData.x = sin(test) * 200.f;
+			
+			renderData.scale = objects[i]->scale;
 			
 			objects[i]->visual->Render(&renderData);
 		}

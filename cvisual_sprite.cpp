@@ -40,9 +40,15 @@ void CVisual_Sprite::Render(const SRenderData* rnd_data)
 		h = h - (h * 0.5f);
 	}
 	
+		w = w * rnd_data->scale;
+		h = h * rnd_data->scale;
+
 	renderer->SetAlphaBlend(true);
 	//renderer->DrawTexture(texture, x, y, w, h);
 	renderer->DrawTextureRot(texture, x, y, w, h, angle);
+	//renderer->DrawTextureRotScale(texture, x, y, w, h, angle, rnd_data->scale);
+	renderer->DrawRectColoredWire(x, y, w, h, 0xff00ffff);
+	
 	renderer->SetAlphaBlend(false);
 }
 

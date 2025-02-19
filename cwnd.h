@@ -53,4 +53,19 @@ public:
 	virtual void Render();
 };
 
+class CWndDebugText : public CWndBase
+{
+public:
+	CWndDebugText();
+	~CWndDebugText();
+	
+	void AddText(const char* text);
+	
+	void Render();
+private:	
+	CArray<CStr> m_Strings;	
+};
+
+extern CWndDebugText debugText;
+
 #endif

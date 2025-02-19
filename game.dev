@@ -1,7 +1,7 @@
 [Project]
 FileName=game.dev
 Name=game
-UnitCount=29
+UnitCount=32
 Type=0
 Ver=2
 ObjFiles=
@@ -26,8 +26,8 @@ UseCustomMakefile=0
 CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=0
-CompilerSettings=0000000000000000000000000
+CompilerSet=1
+CompilerSettings=0000000000000000001000000
 LogOutput=
 LogOutputEnabled=0
 
@@ -332,6 +332,36 @@ BuildCmd=
 
 [Unit29]
 FileName=crnd_vbuf.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit30]
+FileName=cfontmanager.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=cfontmanager.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=crnd_d3d7.cpp
 CompileCpp=1
 Folder=
 Compile=1

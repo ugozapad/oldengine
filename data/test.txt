@@ -1,3 +1,5 @@
 func test
-    push ax 
+	push ax
+	push bx
+	     
 end

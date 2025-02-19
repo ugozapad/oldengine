@@ -208,6 +208,34 @@ void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, flo
 	glLoadIdentity();
 }
 
+void CRenderer::DrawTextureRotScale(CTexture* texture, float x, float y, float w, float h, float angle, float scale)
+{
+	SetTexture(texture);	
+	
+	glPolygonMode(GL_BACK, GL_FILL);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho((float)viewport.x, (float)viewport.width, (float)viewport.height, (float)viewport.y, -1.0f, 1.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glRotatef(angle, 0.0f, 0.0f, 1.0f );
+	glScalef( scale, scale, scale );
+	
+	glBegin(GL_QUADS);
+  		glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y); 
+    	glTexCoord2f(1.0f, 0.0f); glVertex2f(x+w, y); 
+    	glTexCoord2f(1.0f, 1.0f); glVertex2f(x+w, y+h); 
+    	glTexCoord2f(0.0f, 1.0f); glVertex2f(x,y+h);
+	glEnd();
+
+	glLoadIdentity();
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+}
+
 void CRenderer::DrawTexture3D(CTexture* texture, float x, float y, float w, float h)
 {
 	SetTexture(texture);	

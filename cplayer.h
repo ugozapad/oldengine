@@ -9,6 +9,7 @@ public:
 	CPlayer();
 	~CPlayer();
 	
+	void Update();
 	
 };
 

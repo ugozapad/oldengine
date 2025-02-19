@@ -126,6 +126,8 @@ void CGame::Init()
 	frontend.Init();
 	frontend.OpenHUD();
 	
+	g_pDesktop->AddChildren(&debugText);
+	
 	LoadWorld("data/levels/test.txt");
 }
 
@@ -179,7 +181,8 @@ void CGame::LoadWorld(const char* filename)
 
 void CGame::Update()
 {
-	world->Update();
+	if (world)
+		world->Update();
 
 	frontend.Update();
 }
@@ -187,7 +190,8 @@ void CGame::Update()
 void CGame::Render()
 {
 	// render world
-	world->Render();
+	if (world)
+		world->Render();
 	
 	// Draw UI
 	g_pDesktop->Render();
