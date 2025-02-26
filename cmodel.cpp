@@ -26,9 +26,9 @@ void CModel::Render(const SRenderData* rnd_data)
 void CModel::Load(const char* filename)
 {
 	FILE* file = fopen(filename, "rb");
-	if (file = NULL)
+	if (file == NULL)
 	{
-		printf("Canno't load file %s\n", filename);
+		printf("Cannot load file %s\n", filename);
 		return;
 	}
 
