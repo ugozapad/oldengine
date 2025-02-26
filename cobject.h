@@ -20,6 +20,7 @@ public:
 	~CObject();
 
 	virtual void Update();
+	virtual void Render();
 
 	void LoadVisual(const char* filename);
 	

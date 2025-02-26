@@ -23,3 +23,8 @@ float CTimer::GetDt()
 {
 	return (float)(deltaTime) / CLOCKS_PER_SEC;
 }
+
+float CTimer::GetTime()
+{
+	return (float)(beginTime) / CLOCKS_PER_SEC;
+}

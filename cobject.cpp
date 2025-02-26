@@ -30,6 +30,23 @@ void CObject::Update()
 {
 }
 
+void CObject::Render()
+{
+	static SRenderData renderData;
+	
+	if (!visual)
+		return;
+	
+	renderData.position.x=position.x;
+	renderData.position.y=position.y;
+	renderData.position.z=position.z;
+	renderData.rotation.x=rotation.x;
+	renderData.rotation.y=rotation.y;
+	renderData.rotation.z=rotation.z;
+	renderData.scale=scale;
+	visual->Render(&renderData);
+}
+
 void CObject::LoadVisual(const char* filename)
 {
 	if (strstr(filename, ".jpg") || strstr(filename, ".png") || strstr(filename, ".bmp"))

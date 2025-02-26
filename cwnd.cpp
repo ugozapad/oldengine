@@ -4,7 +4,7 @@
 
 CWndBase* g_pDesktop = NULL;
 
-bool CWndBase::ms_bDrawDebug = true;
+bool CWndBase::ms_bDrawDebug = false;
 
 CWndBase::CWndBase(void)
 {

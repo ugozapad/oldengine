@@ -123,6 +123,8 @@ CVertexBuffer_VBO::~CVertexBuffer_VBO()
 /////////////////////////////////////////////////////////////////////
 // Direct3D Vertex Buffer 
 
+#if 0
+
 IDirect3D7* g_pD3D = NULL;
 IDirect3DDevice7* g_pD3DDevice = NULL;
 
@@ -216,3 +218,4 @@ void CVertexBuffer_D3D::Unbind()
 	
 }
 
+#endif

@@ -5,6 +5,7 @@
 #include "ctimer.h"
 #include "cwnd.h"
 #include "cfontmanager.h"
+#include "crenderer.h"
 
 static char debugBuf[128];
 
@@ -20,7 +21,46 @@ CPlayer::~CPlayer()
 void CPlayer::Update()
 {
 	CObject::Update();
+
+	/*
+	if (input->IsPressed('W'))
+		position.y -= DEGTORAD(rotation.z) * timer.GetDt() * 200.0f;
+	if (input->IsPressed('S'))
+		position.y += DEGTORAD(rotation.z) * timer.GetDt() * 200.0f;
+*/
+
+	if (input->IsPressed('A'))
+		rotation.z -= timer.GetDt() * 200.0f;
+	if (input->IsPressed('D'))
+		rotation.z += timer.GetDt() * 200.0f;
+
+	Vec2 pos; pos.x = position.x; pos.y = position.y;
+
+	float speed = timer.GetDt() * 200.0f;
+	Vec2 dir = Vec2AngleToDirection( DEGTORAD( rotation.z )  - ( MM_PI * 0.5f ) );
+	//dir = Vec2Mulf(dir, speed);
+
+	//renderer->DrawLine(dir.x, dir.y, dir.x * 10.0f, dir.y * 10.0f, 0xff0000ff);
 	
+	if (input->IsPressed('W'))
+	{
+		pos = Vec2Add(pos, dir);
+	}
+	if (input->IsPressed('S'))
+	{
+		pos = Vec2Subtract(pos, dir);
+	}
+
+	position.x = pos.x;
+	position.y = pos.y;
+
+	sprintf(debugBuf, "pos %f %f\nrot %f\ndir %f %f", position.x, position.y, rotation.z, dir.x, dir.y);
+	debugText.SetPosition( position.x, position.y);
+	debugText.SetText(debugBuf);
+
+	debugUtils->DrawLine(pos.x + dir.x, pos.y + dir.y, pos.x + dir.x * 200.0f, pos.y + dir.y * 200.0f, 0xff0000ff);
+
+#if 0
 	if (input->IsPressed('W'))
 		position.y -= timer.GetDt() * 200.0f;
 	if (input->IsPressed('S'))
@@ -58,5 +98,6 @@ void CPlayer::Update()
 	//debugText.SetPosition(100.f, 100.f);
 	debugText.SetPosition( position.x, position.y);
 	debugText.SetText(debugBuf);
+#endif
 }
 

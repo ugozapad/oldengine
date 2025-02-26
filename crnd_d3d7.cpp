@@ -3,6 +3,8 @@
 
 #include "crenderer.h"
 
+#if 0
+
 #include <d3d.h>
 
 class CRenderer_D3D
@@ -51,5 +53,7 @@ void CRenderer_D3D::DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount)
 	
 	g_pD3DDevice->DrawPrimitiveVB(D3DPT_TRIANGLELIST, vb, 0, vertexcount, 0);
 }
+
+#endif
 
 #endif

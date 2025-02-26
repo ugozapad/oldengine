@@ -178,12 +178,21 @@ public:
     
     // Rendering
 	void DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount);
+	void DrawLine(float x1, float y1, float x2, float y2, uint color);
 	void DrawRectColoredWire(float x, float y, float w, float h, uint color);
 	void DrawTile(CTexture* texture, float x, float y, float w, float h, float s1, float t1, float s2, float t2);
     void DrawTexture(CTexture* texture, float x, float y, float w, float h);
-    void DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle);
-    void DrawTextureRotScale(CTexture* texture, float x, float y, float w, float h, float angle, float scale);
     void DrawTexture3D(CTexture* texture, float x, float y, float w, float h);
+
+	// Special Effects
+	void DrawScreenOverlay(float r, float g, float b, float a);
+
+	// Matrix API
+	void PushTransformMatrix();
+	void Translate(float x, float y, float z);
+	void RotateZ(float angle);
+	void Scale(float scale);
+	void PopTransformMatrix();
 
     void SetAlphaBlend(bool enable);
     
@@ -218,5 +227,33 @@ private:
 };
 
 extern CRenderer* renderer;
+
+/*
+ * Debug utils class.
+ */
+class CDebugUtils
+{
+public:
+	CDebugUtils();
+	~CDebugUtils();
+
+	void DrawLine(float x1, float y1, float x2, float y2, uint color);
+	
+	void Flush();
+
+private:
+	struct SDbgLine
+	{
+		float x1;
+		float y1;
+		float x2;
+		float y2;
+		uint color;
+	};
+
+	CArray<SDbgLine> lines;
+};
+
+extern CDebugUtils* debugUtils;
 
 #endif // CRENDERER_H

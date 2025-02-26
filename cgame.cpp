@@ -126,6 +126,13 @@ void CGame::Init()
 	frontend.Init();
 	frontend.OpenHUD();
 	
+	/*
+	CWndBase* img = new CWndBase();
+	img->SetTexture("data/textures/inputmsg.png");
+	img->SetSize((float)viewport.width, (float)viewport.height);
+	g_pDesktop->AddChildren(img);
+	*/
+
 	g_pDesktop->AddChildren(&debugText);
 	
 	LoadWorld("data/levels/test.txt");
@@ -134,7 +141,7 @@ void CGame::Init()
 void CGame::Shutdown()
 {
 	frontend.CloseHUD();
-	frontend.CloseMainMenu();
+//	frontend.CloseMainMenu();
 	frontend.Shutdown();
 
 	delete g_pDesktop; g_pDesktop = NULL;
@@ -193,6 +200,10 @@ void CGame::Render()
 	if (world)
 		world->Render();
 	
+	//renderer->DrawScreenOverlay(0.f, 0.f, 0.f, sin(timer.GetTime()));
+
+	debugUtils->Flush();
+
 	// Draw UI
 	g_pDesktop->Render();
 

@@ -116,6 +116,29 @@ void CRenderer::DrawVertexBuffer(CVertexBuffer* vbuf, uint vertexcount)
 	vbuf->Unbind();
 }
 
+void CRenderer::DrawLine(float x1, float y1, float x2, float y2, uint color)
+{
+	SetTexture(NULL);
+
+	glPolygonMode(GL_BACK, GL_LINE);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho((float)viewport.x, (float)viewport.width, (float)viewport.height, (float)viewport.y, -1.0f, 1.0f);
+
+	glPushAttrib(GL_CURRENT_BIT);
+	glColor4ubv((const GLubyte*)&color);
+
+	glBegin(GL_LINES);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+	glEnd();
+
+	glPopAttrib();
+
+	glLoadIdentity();
+}
+
 void CRenderer::DrawRectColoredWire(float x, float y, float w, float h, uint color)
 {
 	SetTexture(NULL);
@@ -181,6 +204,8 @@ void CRenderer::DrawTexture(CTexture* texture, float x, float y, float w, float 
 	glLoadIdentity();
 }
 
+/*
+
 void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, float h, float angle)
 {
 	SetTexture(texture);	
@@ -193,7 +218,10 @@ void CRenderer::DrawTextureRot(CTexture* texture, float x, float y, float w, flo
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(angle, 0.0f, 0.0f, 1.0f );
+
+	//glTranslatef(x, y, 0.0f);
+	glRotatef(angle, 0.0f, 0.0f, 1.0f );	
+	//glTranslatef(-x, -y, 0.0f);
 	
 	glBegin(GL_QUADS);
   		glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y); 
@@ -220,7 +248,11 @@ void CRenderer::DrawTextureRotScale(CTexture* texture, float x, float y, float w
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(angle, 0.0f, 0.0f, 1.0f );
+
+	glTranslatef(x, y, 0.0f);
+	glRotatef(angle, 0.0f, 0.0f, 1.0f );	
+	glTranslatef(-x, -y, 0.0f);
+
 	glScalef( scale, scale, scale );
 	
 	glBegin(GL_QUADS);
@@ -235,6 +267,8 @@ void CRenderer::DrawTextureRotScale(CTexture* texture, float x, float y, float w
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 }
+
+*/
 
 void CRenderer::DrawTexture3D(CTexture* texture, float x, float y, float w, float h)
 {
@@ -252,6 +286,51 @@ void CRenderer::DrawTexture3D(CTexture* texture, float x, float y, float w, floa
     	glTexCoord2f(1.0f, 1.0f); glVertex2f(x+w, y+h); 
     	glTexCoord2f(0.0f, 1.0f); glVertex2f(x,y+h);
 	glEnd();
+}
+
+void CRenderer::DrawScreenOverlay(float r, float g, float b, float a)
+{
+	SetAlphaBlend(true);
+	SetBlackAlpha(true);
+
+	glPushAttrib(GL_CURRENT_BIT);
+	glColor4f(r, g, b, a);
+
+	DrawTexture(NULL, 0.0f, 0.0f, (float)viewport.width, (float)viewport.height);
+
+	glPopAttrib();
+
+	SetBlackAlpha(false);
+
+}
+
+void CRenderer::PushTransformMatrix()
+{
+	// Change model matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+	
+void CRenderer::Translate(float x, float y, float z)
+{
+	glTranslatef(x, y, z);
+}
+
+void CRenderer::RotateZ(float angle)
+{
+	glRotatef(angle, 0.0f, 0.0f, 1.0f);
+}
+
+void CRenderer::Scale(float scale)
+{
+	glScalef( scale, scale, scale );
+}
+
+void CRenderer::PopTransformMatrix()
+{
+	// Change model matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void CRenderer::SetAlphaBlend(bool enable)
@@ -349,3 +428,42 @@ void CVisual::Load(const char* filename)
 {
 }
 
+////////////////////
+// Debug utils class
+
+static CDebugUtils s_debugUtils;
+CDebugUtils* debugUtils = &s_debugUtils;
+
+CDebugUtils::CDebugUtils()
+{
+}
+
+CDebugUtils::~CDebugUtils()
+{
+}
+
+void CDebugUtils::DrawLine(float x1, float y1, float x2, float y2, uint color)
+{
+	SDbgLine line;
+	line.x1=x1;
+	line.y1=y1;
+	line.x2=x2;
+	line.y2=y2;
+	line.color=color;
+	lines.Add(line);
+}
+	
+void CDebugUtils::Flush()
+{
+	int numLines = lines.GetSize();
+	for (int i = 0; i < numLines; i++)
+	{
+		renderer->DrawLine(lines[i].x1, 
+			lines[i].y1,
+			lines[i].x2,
+			lines[i].y2,
+			lines[i].color);
+	}
+
+	lines.RemoveAll();
+}

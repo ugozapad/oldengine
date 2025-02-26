@@ -16,7 +16,7 @@ CWorld::~CWorld()
 
 void CWorld::LoadWorld(const char* filename)
 {
-	bool isText = strstr(filename, ".txt");
+	bool isText = !!strstr(filename, ".txt");
 	
 	FILE* file = fopen(filename, isText ? "r" : "rb");
 	if (!file)
@@ -33,10 +33,9 @@ void CWorld::LoadWorld(const char* filename)
 	fclose(file);
 }
 
-template <size_t buffer_capacity>
-void RemoveNextLine(char(&buffer)[buffer_capacity])
+void RemoveNextLine(char *buffer, size_t size)
 {
-	for (int i = 0; i < buffer_capacity; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		if (buffer[i] == '\n')
 			buffer[i] = '\0';
@@ -103,7 +102,7 @@ void CWorld::LoadTextWorld(FILE* file)
 			{
 				fscanf(file, "%s", entitynameBuffer);
 				//fgets(entitynameBuffer, sizeof(entitynameBuffer), file);
-				RemoveNextLine(entitynameBuffer);
+				RemoveNextLine(entitynameBuffer, sizeof(entitynameBuffer));
 				beginObject = true;
 			}
 		}
@@ -112,11 +111,11 @@ void CWorld::LoadTextWorld(FILE* file)
 			if (strcmp(lineHeader, "ClassName") == 0) {
 				fscanf(file, "%s", classnameBuffer);
 				//fgets(classnameBuffer, sizeof(classnameBuffer), file);
-				RemoveNextLine(classnameBuffer);
+				RemoveNextLine(classnameBuffer, sizeof(classnameBuffer));
 			} else if (strcmp(lineHeader, "Visual") == 0) {
 				fscanf(file, "%s", visualnameBuffer);
 				//fgets(visualnameBuffer, sizeof(visualnameBuffer), file);
-				RemoveNextLine(visualnameBuffer);
+				RemoveNextLine(visualnameBuffer, sizeof(visualnameBuffer));
 			} else if (strcmp(lineHeader, "Position") == 0) {
 				fscanf(file, "%f %f %f\n", &pos.x, &pos.y, &pos.z);
 			} else if (strcmp(lineHeader, "Rotation") == 0) {
@@ -140,40 +139,19 @@ void CWorld::Update()
 	for (int i = 0; i < numObjects; i++)
 	{
 		CObject* object = objects[i];
-		
-		CPlayer* player = dynamic_cast<CPlayer*>(object);
-		if (player)
-			player->Update();
-		else if (object)
+		if (object)
 			object->Update();
 	}
 }
 
 void CWorld::Render()
 {
-	static SRenderData renderData;
-//	static float test = 0.0f;
-//	test += timer.GetDt();
-	
 	int numObjects = objects.GetSize();
 	for (int i = 0; i < numObjects; i++)
 	{
-		if (objects[i] && objects[i]->visual)
+		if (objects[i])
 		{
-			renderData.position.x=objects[i]->position.x;
-			renderData.position.y=objects[i]->position.y;
-			renderData.position.z=objects[i]->position.z;
-			renderData.rotation.x = objects[i]->rotation.x;
-			renderData.rotation.y = objects[i]->rotation.y;
-			renderData.rotation.z = objects[i]->rotation.z;
-				
-		//	renderData.rotation.z = sin(test) * 200.f;
-			
-		//	renderData.x = sin(test) * 200.f;
-			
-			renderData.scale = objects[i]->scale;
-			
-			objects[i]->visual->Render(&renderData);
+			objects[i]->Render();
 		}
 	}
 }

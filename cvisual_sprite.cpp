@@ -13,43 +13,51 @@ CVisual_Sprite::~CVisual_Sprite()
 
 void CVisual_Sprite::Render(const SRenderData* rnd_data)
 {
-	float x = 0.f;
-	float y = 0.f;
-	
-	float angle = 0.0f;
-	
-	if (rnd_data)
-	{
-		x=rnd_data->position.x;
-		y=rnd_data->position.y;
-		angle=rnd_data->rotation.z;
-	}
-	
-	static bool calc_anchor = false;
-	
-	// anchor calculation
-	
+	assert(rnd_data);
+
+	float angle = rnd_data->rotation.z;
+
+	// move picture to the center
 	float w = (float)texture->GetWidth();
 	float h = (float)texture->GetHeight();
-	
-	if (calc_anchor)
-	{
-		x = x - (w * 0.5f);
-		y = y - (h * 0.5f);
-		w = w - (w * 0.5f);
-		h = h - (h * 0.5f);
-	}
-	
-		w = w * rnd_data->scale;
-		h = h * rnd_data->scale;
+	float x = rnd_data->position.x;
+	float y = rnd_data->position.y;
 
 	renderer->SetAlphaBlend(true);
-	//renderer->DrawTexture(texture, x, y, w, h);
-	renderer->DrawTextureRot(texture, x, y, w, h, angle);
-	//renderer->DrawTextureRotScale(texture, x, y, w, h, angle, rnd_data->scale);
-	renderer->DrawRectColoredWire(x, y, w, h, 0xff00ffff);
+
+	renderer->PushTransformMatrix();
+
+	renderer->Translate(x, y, 0.0f);
+	renderer->RotateZ( angle );
+	renderer->Scale(rnd_data->scale);
 	
-	renderer->SetAlphaBlend(false);
+	//w = w * 0.5f;
+	//h = h * 0.5f;
+	
+//	x = -w;//(w* 0.5f);
+//	y = -h;//(h* 0.5f);
+
+	x = 0.f;
+	y = 0.f;
+
+	x = x - (w * 0.5f);
+	y = y - (h * 0.5f);
+
+	renderer->DrawTexture(
+		texture, 
+		x,
+		y,
+		w,
+		h);
+	
+	renderer->DrawRectColoredWire(
+		x,
+		y, 
+		w, 
+		h,
+		0xff00ffff);
+
+	renderer->PopTransformMatrix();
 }
 
 void CVisual_Sprite::Load(const char* filename)
@@ -57,3 +65,44 @@ void CVisual_Sprite::Load(const char* filename)
 	texture = texcontainer->LoadTexture(filename);
 }
 
+
+/*
+	renderer->SetAlphaBlend(true);
+
+	renderer->PushTransformMatrix();
+	renderer->RotateZ( rnd_data->rotation.z ); 
+	renderer->Translate(rnd_data->position.x, rnd_data->position.y, 0.0f);
+	
+  // matrix api
+	renderer->DrawTexture(
+		texture, 
+		0.0f,
+		0.0f,
+		(float)texture->GetWidth(),
+		(float)texture->GetHeight());
+
+	
+	renderer->DrawRectColoredWire(
+		0.f, 
+		0.f, 
+		(float)texture->GetWidth(), 
+		(float)texture->GetHeight(),
+		0xff00ffff);
+
+  // old code
+	renderer->DrawTexture(
+		texture, 
+		rnd_data->position.x,
+		rnd_data->position.y,
+		(float)texture->GetWidth(),
+		(float)texture->GetHeight());
+
+  	renderer->DrawRectColoredWire(
+		rnd_data->position.x, 
+		rnd_data->position.y, 
+		(float)texture->GetWidth(), 
+		(float)texture->GetHeight(),
+		0xff00ffff);
+
+	renderer->PopTransformMatrix();
+*/

@@ -12,6 +12,7 @@ public:
 	void Update();
 
 	float GetDt();
+	float GetTime();
 
 public:
 	clock_t beginTime;
