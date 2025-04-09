@@ -4,6 +4,7 @@
 #include "cmath.h"
 #include "carray.h"
 #include "cstr.h"
+#include "cfontmanager.h"
 
 enum EWndFlags
 {
@@ -37,6 +38,7 @@ public:
 
 	CArray<CWndBase*> m_Children;
 	CTexture* m_pTexture;
+	CFont* m_pFont;
 	CStr m_Text;
 	Vec2 m_Position;
 	Vec2 m_Size;

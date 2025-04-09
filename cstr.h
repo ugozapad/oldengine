@@ -104,6 +104,21 @@ public:
 		return stringB.Compare( stringA ) == 0;
 	}
 
+	friend bool operator!=(const CStr& stringA, const CStr& stringB)
+	{
+		return stringA.Compare(stringB) == 0;
+	}
+
+	friend bool operator!=(const CStr& stringA, const char* stringB)
+	{
+		return stringA.Compare(stringB) != 0;
+	}
+
+	friend bool operator!=(const char* stringA, const CStr& stringB)
+	{
+		return stringB.Compare(stringA) != 0;
+	}
+
 	char& operator[]( const size_t idx )
 	{
 		return m_Text[idx];

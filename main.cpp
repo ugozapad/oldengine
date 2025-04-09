@@ -20,6 +20,16 @@ LRESULT CALLBACK WndProc (HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam);
 void InitConsole();
 void LoadSettings(int* width, int* height);
 
+#ifdef _CONSOLE
+/**************************
+ * main
+ *
+ **************************/
+int main()
+{
+    HINSTANCE hInstance = GetModuleHandleA(NULL);
+
+#else
 /**************************
  * WinMain
  *
@@ -30,6 +40,7 @@ int WINAPI WinMain (HINSTANCE hInstance,
                     LPSTR lpCmdLine,
                     int iCmdShow)
 {
+#endif // _CONSOLE
     WNDCLASS wc;
     HWND hWnd;  
     MSG msg;
@@ -37,8 +48,10 @@ int WINAPI WinMain (HINSTANCE hInstance,
 	int width = 800;
 	int height = 600;
 	
+#ifndef _CONSOLE
 	/* Open console */
 	InitConsole();
+#endif // !_CONSOLE
 	
 	/* Load settings */
 	LoadSettings(&width, &height);
@@ -176,6 +189,13 @@ LRESULT CALLBACK WndProc (HWND hWnd, UINT message,
 		input->OnKeyAction((int)wParam, false);
 		
 		return 0;
+
+    case WM_ACTIVATE:
+        // reset all keys due losing focus
+        if (wParam == WA_INACTIVE)
+            input->Reset();
+
+        return 0;
 
     default:
         return DefWindowProc (hWnd, message, wParam, lParam);

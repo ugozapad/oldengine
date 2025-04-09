@@ -5,6 +5,7 @@
 #include "cwnd.h"
 #include "cgame.h"
 #include "cworld.h"
+#include "cbullet.h"
 
 CGame* game = NULL;
 
@@ -116,6 +117,9 @@ CGame::~CGame()
 
 void CGame::Init()
 {
+	// game init
+	bulletMan.Create();
+
 	// initialize UI library
 
 	SViewport viewport = renderer->GetViewport();
@@ -145,6 +149,9 @@ void CGame::Shutdown()
 	frontend.Shutdown();
 
 	delete g_pDesktop; g_pDesktop = NULL;
+
+	// game shutdown
+	bulletMan.Destroy();
 }
 
 void CGame::LoadWorld(const char* filename)
@@ -201,6 +208,8 @@ void CGame::Render()
 		world->Render();
 	
 	//renderer->DrawScreenOverlay(0.f, 0.f, 0.f, sin(timer.GetTime()));
+
+	bulletMan.Render();
 
 	debugUtils->Flush();
 

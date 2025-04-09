@@ -372,6 +372,11 @@ void CRenderer::Present()
 	SwapBuffers(context->hDC);
 }
 
+void* CRenderer::Win32_GetWindow()
+{
+	return context->hWnd;
+}
+
 // Visual factory
 CVisual* CRenderer::CreateVisual(EVisualType type)
 {

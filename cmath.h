@@ -24,9 +24,9 @@ struct Vec4
 
 /* Vector 2D */
 
-#define VEC2SET(v, x, y) \
-	v.x = x;\
-	v.y = y
+#define VEC2SET(V, X, Y) \
+	V.x = X;\
+	V.y = Y
 
 #define VEC2ZERO(v) \
 	v.x = 0.f; \
@@ -137,6 +137,126 @@ inline Vec2 Vec2AngleToDirection( float angle )
 	Vec2 v;
 	v.x = (float)cosf( angle );
 	v.y = (float)sinf( angle );
+	return v;
+}
+
+/* Vector 3D */
+
+#define VEC3SET(V, X, Y, Z) \
+	V.x = X;\
+	V.y = Y;\
+	V.z = Z
+
+#define VEC3ZERO(v) \
+	v.x = 0.f; \
+	v.y = 0.f; \
+	v.z = 0.f 
+
+inline float Vec3LengthSQR(const Vec3& v)
+{
+	return v.x * v.x + v.y * v.y + v.z * v.z;
+}
+
+inline float Vec3Length(const Vec3& v)
+{
+	return (float)sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+inline Vec3 Vec3Add(const Vec3& a, const Vec3& b)
+{
+	Vec3 v;
+	v.x = a.x + b.x;
+	v.y = a.y + b.y;
+	v.z = a.z + b.z;
+	return v;
+}
+
+inline Vec3 Vec3Subtract(const Vec3& a, const Vec3& b)
+{
+	Vec3 v;
+	v.x = a.x - b.x;
+	v.y = a.y - b.y;
+	v.z = a.z - b.z;
+	return v;
+}
+
+inline Vec3 Vec3Mul(const Vec3& a, const Vec3& b)
+{
+	Vec3 v;
+	v.x = a.x * b.x;
+	v.y = a.y * b.y;
+	v.z = a.z * b.z;
+	return v;
+}
+
+inline Vec3 Vec3Div(const Vec3& a, const Vec3& b)
+{
+	Vec3 v;
+	v.x = a.x / b.x;
+	v.y = a.y / b.y;
+	v.z = a.z / b.z;
+	return v;
+}
+
+inline Vec3 Vec3Addf(const Vec3& a, const float b)
+{
+	Vec3 v;
+	v.x = a.x + b;
+	v.y = a.y + b;
+	v.z = a.z + b;
+	return v;
+}
+
+inline Vec3 Vec3Subtractf(const Vec3& a, const float b)
+{
+	Vec3 v;
+	v.x = a.x - b;
+	v.y = a.y - b;
+	v.z = a.z - b;
+	return v;
+}
+
+inline Vec3 Vec3Mulf(const Vec3& a, const float b)
+{
+	Vec3 v;
+	v.x = a.x * b;
+	v.y = a.y * b;
+	v.z = a.z * b;
+	return v;
+}
+
+inline Vec3 Vec3Divf(const Vec3& a, const float b)
+{
+	Vec3 v;
+	v.x = a.x / b;
+	v.y = a.y / b;
+	v.z = a.z / b;
+	return v;
+}
+
+inline float Vec3Distance(const Vec3& a, const Vec3& b)
+{
+	Vec3 v;
+	v = Vec3Subtract(b, a);
+	return Vec3Length(v);
+}
+
+inline Vec3 Vec3Normalize(const Vec3& v)
+{
+	float len;
+	Vec3 n;
+	len = Vec3Length(v);
+	n.x = v.x / len;
+	n.y = v.y / len;
+	n.z = v.z / len;
+	return n;
+}
+
+inline Vec3 Vec3Rotate(const Vec3& p, float angle)
+{
+	Vec3 v;
+	v.x = p.x * (float)cos(angle) - p.y * (float)sin(angle);
+	v.y = p.x * (float)sin(angle) + p.y * (float)cos(angle);
 	return v;
 }
 

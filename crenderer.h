@@ -210,6 +210,9 @@ public:
     
     const SViewport& GetViewport() { return viewport; }
     
+	// WinAPI
+	void* Win32_GetWindow();
+
     // Visual factory
     CVisual* CreateVisual(EVisualType type);
     

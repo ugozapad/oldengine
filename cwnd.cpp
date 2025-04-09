@@ -1,4 +1,5 @@
 #include "cwnd.h"
+#include "cinput.h"
 #include "crenderer.h"
 #include "cfontmanager.h"
 
@@ -9,7 +10,7 @@ bool CWndBase::ms_bDrawDebug = false;
 CWndBase::CWndBase(void)
 {
 	m_pTexture = NULL;
-
+	m_pFont = NULL;
 	m_Position.x = 0.f;
 	m_Position.y = 0.f;
 	m_Size.x = 0.f;
@@ -21,6 +22,7 @@ CWndBase::~CWndBase(void)
 	m_Text.Clear();
 	m_Children.RemoveAll();
 
+	m_pFont = NULL;
 	m_pTexture = NULL;
 }
 
@@ -41,7 +43,11 @@ void CWndBase::Render()
 	// render text
 	if (!m_Text.IsEmpty())
 	{
-		fontman.sysfont->Print(m_Position.x, m_Position.y, m_Text.GetText());
+		// if font doesn't initialized - trying to use system font
+		if (m_pFont == NULL)
+			m_pFont = fontman.sysfont;
+
+		m_pFont->Print(m_Position.x, m_Position.y, m_Text.GetText());
 	}
 
 	// draw debug rect
@@ -83,8 +89,10 @@ void CWndBase::SetTexture(const char* filename)
 
 void CWndBase::SetText(const char* text)
 {
-	m_Text = text;
+	if (m_Text != text)
+		m_Text = text;
 
+	
 	// #TODO: FLAG ???
 	AutoResize();
 }
@@ -157,6 +165,19 @@ CWndButton::~CWndButton()
 
 void CWndButton::Render()
 {
+	int mx, my;
+	input->GetMousePos(&mx, &my);
+
+	float x = m_Position.x;
+	float y = m_Position.y;
+	float cx = m_Position.x + m_Size.x;
+	float cy = m_Position.y + m_Size.y;
+	bool hovered = false;
+
+	if (x <= (float)mx && (float)mx <= cx &&
+		y <= (float)my && (float)my <= cy)
+		hovered = true;
+
 	CWndBase::Render();
 }
 

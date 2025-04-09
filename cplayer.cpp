@@ -6,12 +6,21 @@
 #include "cwnd.h"
 #include "cfontmanager.h"
 #include "crenderer.h"
+#include "cvisual_sprite.h"
+#include "cbullet.h"
 
 static char debugBuf[128];
+static bool debugPlayer = false;
 
 CPlayer::CPlayer()
 {
 	scale = 0.2f;
+
+#ifdef _DEBUG
+	debugPlayer = true;
+
+	CVisual_Sprite::debugDrawRect = true;
+#endif // _DEBUG
 }
 
 CPlayer::~CPlayer()
@@ -38,27 +47,58 @@ void CPlayer::Update()
 
 	float speed = timer.GetDt() * 200.0f;
 	Vec2 dir = Vec2AngleToDirection( DEGTORAD( rotation.z )  - ( MM_PI * 0.5f ) );
-	//dir = Vec2Mulf(dir, speed);
+	Vec2 adddir = Vec2Mulf(dir, speed);
 
 	//renderer->DrawLine(dir.x, dir.y, dir.x * 10.0f, dir.y * 10.0f, 0xff0000ff);
 	
 	if (input->IsPressed('W'))
 	{
-		pos = Vec2Add(pos, dir);
+		pos = Vec2Add(pos, adddir);
 	}
 	if (input->IsPressed('S'))
 	{
-		pos = Vec2Subtract(pos, dir);
+		pos = Vec2Subtract(pos, adddir);
 	}
 
+	EWeapons weapon = WEAPON_PISTOL;
+
+	static float threshold = 0.5f;
+	if (input->IsPressed(KEY_SPACE) && threshold >= 0.5f)
+	{
+		Vec3 bdir;
+		VEC3SET(bdir, dir.x, dir.y, 0.0f);
+		bulletMan.AddBullet(position, bdir, 800.0f * 0.5f, g_WeaponDamageTable[weapon]);
+		threshold = 0.0f;
+	}
+
+	threshold += timer.GetDt();
+
+	///////////////////////////////////
+	// DEBUG
+	if (input->IsPressed('P'))
+		debugPlayer = !debugPlayer;
+
+	if (input->IsPressed('O'))
+		CVisual_Sprite::debugDrawRect = !CVisual_Sprite::debugDrawRect;
+	///////////////////////////////////
+	
+	
 	position.x = pos.x;
 	position.y = pos.y;
 
-	sprintf(debugBuf, "pos %f %f\nrot %f\ndir %f %f", position.x, position.y, rotation.z, dir.x, dir.y);
-	debugText.SetPosition( position.x, position.y);
-	debugText.SetText(debugBuf);
+	if (debugPlayer)
+	{
+		sprintf(debugBuf, "pos %f %f\nrot %f\ndir %f %f", position.x, position.y, rotation.z, dir.x, dir.y);
+		debugText.SetPosition(position.x, position.y);
+		debugText.SetText(debugBuf);
 
-	debugUtils->DrawLine(pos.x + dir.x, pos.y + dir.y, pos.x + dir.x * 200.0f, pos.y + dir.y * 200.0f, 0xff0000ff);
+		debugUtils->DrawLine(pos.x + dir.x, pos.y + dir.y, pos.x + dir.x * 200.0f, pos.y + dir.y * 200.0f, 0xff0000ff);
+	}
+	else
+	{
+		debugText.SetText("");
+	}
+
 
 #if 0
 	if (input->IsPressed('W'))

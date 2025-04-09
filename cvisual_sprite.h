@@ -12,6 +12,9 @@ public:
     void Render(const SRenderData* rnd_data);
     void Load(const char* filename);
     
+public:
+	static bool debugDrawRect;
+
 private:
 	CTexture* texture;
 };

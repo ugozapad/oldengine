@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "cvisual_sprite.h"
 
+bool CVisual_Sprite::debugDrawRect = false;
+
 CVisual_Sprite::CVisual_Sprite()
 {
 	texture = NULL;
@@ -50,12 +52,15 @@ void CVisual_Sprite::Render(const SRenderData* rnd_data)
 		w,
 		h);
 	
-	renderer->DrawRectColoredWire(
-		x,
-		y, 
-		w, 
-		h,
-		0xff00ffff);
+	if (debugDrawRect)
+	{
+		renderer->DrawRectColoredWire(
+			x,
+			y,
+			w,
+			h,
+			0xff00ffff);
+	}
 
 	renderer->PopTransformMatrix();
 }
