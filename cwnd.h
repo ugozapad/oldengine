@@ -70,4 +70,6 @@ private:
 
 extern CWndDebugText debugText;
 
+
+
 #endif

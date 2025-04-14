@@ -41,6 +41,8 @@ private:
 
 	CWndBase* m_pHealthImage;
 	CWndBase* m_pHealthText;
+
+	CWndBase* m_pWeaponText;
 };
 
 class CGame

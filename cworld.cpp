@@ -182,3 +182,58 @@ void CWorld::RemoveObject(CObject* object)
 	int idx = objects.IndexOf(object);
 	objects.Remove(idx);
 }
+
+CLevelController* levelcontroller = NULL;
+
+CLevelController::CLevelController()
+{
+	m_score = 0;
+}
+
+CLevelController::~CLevelController()
+{
+}
+
+/***********************************************/
+
+#include "crenderer.h"
+#include <stdarg.h>
+#include <string.h>
+
+void Error_Static( const char* msg, ... )
+{
+	static char buf[1024 * 4];
+
+	va_list args;
+	va_start( args, msg );
+	vsprintf( buf, msg, args );
+	va_end( args );
+
+	printf( "ERROR: %s", buf );
+}
+
+void CResource::Load( const char* filename, CResource::EResourceType resourceType )
+{
+	m_resourceType = resourceType;
+
+	switch (resourceType)
+	{
+	case CResource::RESTYPE_TEXTURE:
+		m_pTexture = texcontainer->LoadTexture( filename );
+		break;
+//	case CResource::RESTYPE_VISUAL:
+//		break;
+//	case CResource::RESTYPE_SOUND:
+//		break;
+	default:
+		Error_Static( "CResource::Load: unknown resource type %i\n", resourceType );
+		break;
+	}
+}
+
+/***********************************************/
+
+class CQuatTree
+{
+
+};

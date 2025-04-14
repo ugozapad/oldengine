@@ -3,6 +3,7 @@
 #include "crenderer.h"
 #include "cobject.h"
 #include "cplayer.h"
+#include "cworld.h"
 
 CObjectFactory objfactory;
 const char* objectTypeNames[OBJTYPE_COUNT] = { "CObject", "CPlayer", "CLevelController" };
@@ -69,6 +70,10 @@ CObject* CObjectFactory::CreateByType(int type)
 		break;
 	case OBJTYPE_PLAYER:
 		object = new CPlayer();
+		break;
+
+	case OBJTYPE_LEVELCONTROLLER:
+		object = new CLevelController();
 		break;
 	}
 	

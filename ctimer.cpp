@@ -21,7 +21,10 @@ void CTimer::Update()
 
 float CTimer::GetDt()
 {
-	return (float)(deltaTime) / CLOCKS_PER_SEC;
+	float dt = (float)(deltaTime) / CLOCKS_PER_SEC;
+	if (dt >= 0.2f)
+		dt = 0.2f;
+	return dt;
 }
 
 float CTimer::GetTime()

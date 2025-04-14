@@ -16,6 +16,7 @@ CFrontend::CFrontend()
 	m_pNewGameButton = NULL;
 	m_pHealthImage= NULL;
 	m_pHealthText = NULL;
+	m_pWeaponText = NULL;
 }
 
 CFrontend::~CFrontend()
@@ -52,6 +53,11 @@ void CFrontend::Init()
 	m_pHealthText->SetPosition(m_pHealthImage->m_Position.x + m_pHealthImage->m_Size.x, height - 5.0f);
 	m_pHealthText->SetSize(128.0f, 128.0f);
 	m_pHealthText->SetText("100");
+
+	m_pWeaponText = new CWndBase();
+	m_pWeaponText->SetPosition((float)viewport.width - 256.0f, height);
+	m_pWeaponText->SetSize(128.0f, 128.0f);
+	m_pWeaponText->SetText("Weapon name here !!!");
 }
 
 void CFrontend::Shutdown()
@@ -92,10 +98,12 @@ void CFrontend::OpenHUD()
 {
 	g_pDesktop->AddChildren(m_pHealthImage);
 	g_pDesktop->AddChildren(m_pHealthText);
+	g_pDesktop->AddChildren(m_pWeaponText);
 }
 
 void CFrontend::CloseHUD()
 {
+	g_pDesktop->RemoveChildren(m_pWeaponText);
 	g_pDesktop->RemoveChildren(m_pHealthText);
 	g_pDesktop->RemoveChildren(m_pHealthImage);
 }

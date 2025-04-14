@@ -61,17 +61,17 @@ void CPlayer::Update()
 	}
 
 	EWeapons weapon = WEAPON_PISTOL;
+	static float shotdelay = 1.0f;
 
-	static float threshold = 0.5f;
-	if (input->IsPressed(KEY_SPACE) && threshold >= 0.5f)
+	if (input->IsPressed(KEY_SPACE) && shotdelay >= g_WeaponThresholdTable[weapon])
 	{
 		Vec3 bdir;
 		VEC3SET(bdir, dir.x, dir.y, 0.0f);
-		bulletMan.AddBullet(position, bdir, 800.0f * 0.5f, g_WeaponDamageTable[weapon]);
-		threshold = 0.0f;
+		bulletMan.AddBullet(position, bdir, 1000.0f, g_WeaponDamageTable[weapon]);
+		shotdelay = 0.0f;
 	}
 
-	threshold += timer.GetDt();
+	shotdelay += timer.GetDt();
 
 	///////////////////////////////////
 	// DEBUG
@@ -88,7 +88,10 @@ void CPlayer::Update()
 
 	if (debugPlayer)
 	{
-		sprintf(debugBuf, "pos %f %f\nrot %f\ndir %f %f", position.x, position.y, rotation.z, dir.x, dir.y);
+		sprintf(debugBuf, "pos %f %f\nrot %f\ndir %f %f\n%i %i", 
+			position.x, position.y, rotation.z, 
+			dir.x, dir.y, 
+			bulletMan.GetBulletCounter(), bulletMan.GetActiveBullets());
 		debugText.SetPosition(position.x, position.y);
 		debugText.SetText(debugBuf);
 

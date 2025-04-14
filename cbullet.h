@@ -6,7 +6,7 @@
 #include "crenderer.h"
 
 #define MAX_BULLETS 256
-#define MAX_BULLET_LIFETIME 5.0f // secs
+#define MAX_BULLET_LIFETIME 2.0f //5.0f // secs
 
 struct SBullet
 {
@@ -35,9 +35,13 @@ public:
 
 	void Render();
 
+	int GetBulletCounter() { return bulletcounter; }
+	int GetActiveBullets() { return activebullet; }
+
 private:
 	SBullet bullets[MAX_BULLETS];
 	int bulletcounter;
+	int activebullet;
 	CTexture* pTracerTexture;
 };
 
@@ -54,6 +58,7 @@ enum EWeapons
 	WEAPON_MAX
 };
 
+extern float g_WeaponThresholdTable[WEAPON_MAX];
 extern float g_WeaponDamageTable[WEAPON_MAX];
 
 #endif // !CBULLET_H
