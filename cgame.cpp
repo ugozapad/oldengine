@@ -65,6 +65,7 @@ void CFrontend::Shutdown()
 	if (!g_pDesktop)
 		return;
 
+	delete m_pWeaponText; m_pWeaponText = NULL;
 	delete m_pHealthText; m_pHealthText = NULL;
 	delete m_pHealthImage; m_pHealthImage = NULL;
 
