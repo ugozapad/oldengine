@@ -47,6 +47,7 @@ int WINAPI WinMain (HINSTANCE hInstance,
     BOOL bQuit = FALSE;
 	int width = 800;
 	int height = 600;
+    DWORD dwWindowStyle = WS_CAPTION | WS_POPUPWINDOW | WS_VISIBLE;
 	
 #ifndef _CONSOLE
 	/* Open console */
@@ -69,11 +70,15 @@ int WINAPI WinMain (HINSTANCE hInstance,
     wc.lpszClassName = "GLSample";
     RegisterClass (&wc);
 
+    RECT rc;
+    SetRect(&rc, 0, 0, width, height);
+    AdjustWindowRect(&rc, dwWindowStyle, FALSE);
+
     /* create main window */
     hWnd = CreateWindow (
       "GLSample", "Game", 
-      WS_CAPTION | WS_POPUPWINDOW | WS_VISIBLE,
-      0, 0, width, height,
+        dwWindowStyle,
+      0, 0, (rc.right - rc.left), (rc.bottom - rc.top),
       NULL, NULL, hInstance, NULL);
 
 	printf("Starting rendering device at window %ix%i\n", width, height);
@@ -192,7 +197,7 @@ LRESULT CALLBACK WndProc (HWND hWnd, UINT message,
 
     case WM_ACTIVATE:
         // reset all keys due losing focus
-        if (wParam == WA_INACTIVE)
+        if (input && wParam == WA_INACTIVE)
             input->Reset();
 
         return 0;

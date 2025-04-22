@@ -7,6 +7,7 @@ CModel::CModel()
 	vbuf_pos = NULL;
 	vbuf_texcoord = NULL;
 	tex = NULL;
+	numVert = 0;
 }
 
 CModel::~CModel()
@@ -19,8 +20,11 @@ CModel::~CModel()
 
 void CModel::Render(const SRenderData* rnd_data)
 {
+	renderer->PushTransformMatrix();
 
+	renderer->DrawVertexBuffer(vbuf, numVert);
 
+	renderer->PopTransformMatrix();
 }
 
 void CModel::Load(const char* filename)
@@ -65,6 +69,8 @@ void CModel::Load(const char* filename)
 		vertexBuffer[i].s = texcoord[i].x;
 		vertexBuffer[i].t = texcoord[i].y;
 	}
+
+	numVert = vertexBuffer.GetSize();
 
 	vbuf = renderer->CreateVertexBuffer();
 	vbuf->Create(&vertexBuffer[0], 

@@ -60,7 +60,7 @@ void CPlayer::Update()
 		pos = Vec2Subtract(pos, adddir);
 	}
 
-	EWeapons weapon = WEAPON_PISTOL;
+	EWeapons weapon = WEAPON_AUTOMATIC;
 	static float shotdelay = 1.0f;
 
 	if (input->IsPressed(KEY_SPACE) && shotdelay >= g_WeaponThresholdTable[weapon])

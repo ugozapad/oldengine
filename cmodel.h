@@ -59,6 +59,8 @@ private:
 
 	CArray<Vec3> pos;
 	CArray<Vec2> texcoord;
+
+	int numVert;
 };
 
 #endif

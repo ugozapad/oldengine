@@ -43,6 +43,7 @@ private:
 	int bulletcounter;
 	int activebullet;
 	CTexture* pTracerTexture;
+	CVisual* pTracer;
 };
 
 extern CBulletManager bulletMan;

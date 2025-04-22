@@ -1,8 +1,15 @@
 #include "cbullet.h"
 #include "ctimer.h"
 
+//#define BULLET_DEBUG
 #define BULLET2D
 #define BULLET_TRANSFORM
+#define NEW_RENDERING
+
+#ifdef BULLET_DEBUG
+#undef MAX_BULLET_LIFETIME
+#define MAX_BULLET_LIFETIME 10.0f
+#endif // BULLET_DEBUG
 
 CBulletManager bulletMan;
 
@@ -12,6 +19,7 @@ CBulletManager::CBulletManager()
 	bulletcounter = 0;
 	activebullet = 0;
 	pTracerTexture = NULL;
+	pTracer = NULL;
 }
 
 CBulletManager::~CBulletManager()
@@ -21,10 +29,18 @@ CBulletManager::~CBulletManager()
 void CBulletManager::Create()
 {
 	pTracerTexture = texcontainer->LoadTexture("data/textures/tracer.jpg");
+
+	pTracer = renderer->CreateVisual(VISUAL_SPRITE);
+	pTracer->Load("data/textures/tracer.jpg");
 }
 
 void CBulletManager::Destroy()
 {
+	if (pTracer)
+	{
+		delete pTracer;
+		pTracer = NULL;
+	}
 }
 
 void CBulletManager::AddBullet(const Vec3& pos, const Vec3& dir, float speed, float damage)
@@ -66,6 +82,12 @@ void CBulletManager::Render()
 	renderer->SetAlphaBlend(true);
 	renderer->SetBlackAlpha(true);
 
+#ifdef NEW_RENDERING
+	SRenderData renderData;
+	memset(&renderData, 0, sizeof(renderData));
+	renderData.scale = 1.0f;
+#endif
+
 	bool noActive = false;
 
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -75,6 +97,10 @@ void CBulletManager::Render()
 
 		noActive = true;
 		activebullet++;
+
+#ifdef BULLET_DEBUG
+		bullets[i].speed = 1.0f;
+#endif // BULLET_DEBUG
 
 		// update bullet
 		float ds = bullets[i].speed * timer.GetDt();
@@ -89,6 +115,17 @@ void CBulletManager::Render()
 #endif // BULLET2D
 
 		// draw bullet
+
+#ifdef NEW_RENDERING
+		VEC3SET(renderData.position,
+			bullets[i].pos.x,
+			bullets[i].pos.y,
+			0.0f);
+		
+		VEC3SET(renderData.rotation, 0.0f, 0.0f, RADTODEG(angle));
+
+		pTracer->Render(&renderData);
+#else
 
 #ifndef BULLET_TRANSFORM
 		float cx = bullets[i].pos.x;
@@ -131,6 +168,8 @@ void CBulletManager::Render()
 
 		renderer->PopTransformMatrix();
 #endif // !BULLET_TRANSFORM
+
+#endif // NEW_RENDERING
 
 		if (bullets[i].time >= MAX_BULLET_LIFETIME)
 			bullets[i].active = false;
