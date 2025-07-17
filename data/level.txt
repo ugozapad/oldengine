@@ -1,4 +1,0 @@
-BeginObject
-Type Sprite
-Visual "data/test.png"
-EndObject

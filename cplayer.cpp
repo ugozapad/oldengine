@@ -14,10 +14,10 @@ static bool debugPlayer = false;
 
 CPlayer::CPlayer()
 {
-	scale = 0.2f;
+	scale = 1.0f;
 
 #ifdef _DEBUG
-	debugPlayer = true;
+	debugPlayer = false;
 
 	CVisual_Sprite::debugDrawRect = true;
 #endif // _DEBUG

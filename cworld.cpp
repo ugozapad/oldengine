@@ -55,6 +55,7 @@ void CWorld::LoadTextWorld(FILE* file)
 	
 	Vec3 pos; memset(&pos, 0, sizeof(pos));
 	Vec3 rot; memset(&rot, 0, sizeof(rot));
+	float scale = 1.0f;
 	entitynameBuffer[0] = '\0';
 	classnameBuffer[0] = '\0';
 	visualnameBuffer[0] = '\0';
@@ -66,6 +67,7 @@ void CWorld::LoadTextWorld(FILE* file)
 			CObject* object = objfactory.CreateByName(classnameBuffer);
 			object->position = pos;
 			object->rotation = rot;
+			object->scale = scale;
 			object->LoadVisual(visualnameBuffer);
 			InsertObject(object);
 			
@@ -79,6 +81,8 @@ void CWorld::LoadTextWorld(FILE* file)
 			visualnameBuffer[0] = '\0';
 			memset(tagnameBuffer, 0, sizeof(tagnameBuffer));
 			tagnameBuffer[0] = '\0';
+
+			scale = 1.0f;
 		}
 
 		char lineHeader[128];
@@ -120,6 +124,8 @@ void CWorld::LoadTextWorld(FILE* file)
 				fscanf(file, "%f %f %f\n", &pos.x, &pos.y, &pos.z);
 			} else if (strcmp(lineHeader, "Rotation") == 0) {
 				fscanf(file, "%f %f %f\n", &rot.x, &rot.y, &rot.z);
+			} else if (strcmp(lineHeader, "Scale") == 0) {
+				fscanf(file, "%f\n", &scale);
 			} else if (strcmp(lineHeader, "EndObject") == 0) {
 				beginObject = false;
 				endObject = true;

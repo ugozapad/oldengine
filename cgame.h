@@ -43,6 +43,8 @@ private:
 	CWndBase* m_pHealthText;
 
 	CWndBase* m_pWeaponText;
+
+	CWndBase* m_pFPSCounter;
 };
 
 class CGame

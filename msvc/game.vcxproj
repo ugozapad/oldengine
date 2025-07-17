@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\camera.cpp" />
+    <ClCompile Include="..\cbackground.cpp" />
     <ClCompile Include="..\cbullet.cpp" />
     <ClCompile Include="..\cfilesystem.cpp" />
     <ClCompile Include="..\cfontmanager.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="..\camera.h" />
     <ClInclude Include="..\carray.h" />
+    <ClInclude Include="..\cbackground.h" />
     <ClInclude Include="..\cbullet.h" />
     <ClInclude Include="..\cfilesystem.h" />
     <ClInclude Include="..\cfontmanager.h" />

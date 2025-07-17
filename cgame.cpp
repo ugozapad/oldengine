@@ -6,6 +6,7 @@
 #include "cgame.h"
 #include "cworld.h"
 #include "cbullet.h"
+#include "cbackground.h"
 
 CGame* game = NULL;
 
@@ -58,12 +59,22 @@ void CFrontend::Init()
 	m_pWeaponText->SetPosition((float)viewport.width - 256.0f, height);
 	m_pWeaponText->SetSize(128.0f, 128.0f);
 	m_pWeaponText->SetText("Weapon name here !!!");
+
+	m_pFPSCounter = new CWndBase();
+	m_pFPSCounter->SetPosition(15.0f, 15.0f);
+	m_pFPSCounter->SetSize(128.0f, 128.0f);
+	m_pFPSCounter->SetTexture("data/textures/back.bmp");
+	m_pFPSCounter->SetText("FPS");
+	g_pDesktop->AddChildren(m_pFPSCounter);
 }
 
 void CFrontend::Shutdown()
 {
 	if (!g_pDesktop)
 		return;
+
+	g_pDesktop->RemoveChildren(m_pFPSCounter);
+	delete m_pFPSCounter; m_pFPSCounter = NULL;
 
 	delete m_pWeaponText; m_pWeaponText = NULL;
 	delete m_pHealthText; m_pHealthText = NULL;
@@ -111,6 +122,8 @@ void CFrontend::CloseHUD()
 
 ///////////////////////////////////////////////////////////////////////////////
 
+CBackground sky_background;
+
 CGame::CGame()
 {
 	world = NULL;
@@ -128,6 +141,8 @@ void CGame::Init()
 {
 	// game init
 	bulletMan.Create();
+
+	sky_background.Init();
 
 	// initialize UI library
 
@@ -160,6 +175,7 @@ void CGame::Shutdown()
 	delete g_pDesktop; g_pDesktop = NULL;
 
 	// game shutdown
+	sky_background.Shutdown();
 	bulletMan.Destroy();
 }
 
@@ -212,6 +228,8 @@ void CGame::Update()
 
 void CGame::Render()
 {
+	sky_background.Render();
+
 	// render world
 	if (world)
 		world->Render();
