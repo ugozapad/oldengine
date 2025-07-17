@@ -189,6 +189,21 @@ void CWorld::RemoveObject(CObject* object)
 	objects.Remove(idx);
 }
 
+CObject* CWorld::GetObjectInPoint(Vec3& point)
+{
+	int numObjects = objects.GetSize();
+	for (int i = 0; i < numObjects; i++)
+	{
+		if (objects[i])	
+		{
+			if (BoundingBoxIsInside(objects[i]->bounds, point))
+				return objects[i];
+		}
+	}
+
+	return NULL;
+}
+
 CLevelController* levelcontroller = NULL;
 
 CLevelController::CLevelController()

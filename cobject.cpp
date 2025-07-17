@@ -6,7 +6,7 @@
 #include "cworld.h"
 
 CObjectFactory objfactory;
-const char* objectTypeNames[OBJTYPE_COUNT] = { "CObject", "CPlayer", "CLevelController" };
+const char* objectTypeNames[OBJTYPE_COUNT] = { "CObject", "CPlayer", "CLevelController", "CNpc" };
 
 CObject::CObject()
 {
@@ -15,6 +15,8 @@ CObject::CObject()
 	memset(&position, 0, sizeof(position));
 	memset(&rotation, 0, sizeof(rotation));
 	scale = 1.0f;
+	
+	bounds = BoundingBoxIdentity(bounds);
 }
 
 CObject::~CObject()
@@ -46,6 +48,13 @@ void CObject::Render()
 	renderData.rotation.z=rotation.z;
 	renderData.scale=scale;
 	visual->Render(&renderData);
+
+	renderer->PushTransformMatrix();
+	renderer->Translate(position.x, position.y, 0.0f);
+
+	renderer->DrawBounds2DColoredWire(bounds, 0xffff00ff);
+
+	renderer->PopTransformMatrix();
 }
 
 void CObject::LoadVisual(const char* filename)
@@ -54,6 +63,19 @@ void CObject::LoadVisual(const char* filename)
 	{
 		visual = renderer->CreateVisual(VISUAL_SPRITE);
 		visual->Load(filename);
+	
+		CTexture* texture = texcontainer->LoadTexture(filename);
+
+		// move picture to the center
+		float w = (float)texture->GetWidth();
+		float h = (float)texture->GetHeight();
+		float x = (w * 0.5f);
+		float y = (h * 0.5f);
+
+		bounds.min.x = x;
+		bounds.min.x = y;
+		bounds.max.x = w;
+		bounds.max.y = h;
 	}
 }
 

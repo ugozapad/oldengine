@@ -260,4 +260,34 @@ inline Vec3 Vec3Rotate(const Vec3& p, float angle)
 	return v;
 }
 
+// Bounding box
+struct BoundingBox
+{
+	Vec3 min;
+	Vec3 max;
+};
+
+inline BoundingBox BoundingBoxIdentity(BoundingBox& bbox)
+{
+	bbox.min.x = -0.1f;
+	bbox.min.y = -0.1f;
+	bbox.min.z = -0.1f;
+
+	bbox.max.x = -0.1f;
+	bbox.max.y = -0.1f;
+	bbox.max.z = -0.1f;
+
+	return bbox;
+}
+
+inline bool BoundingBoxIsInside(BoundingBox& bbox, Vec3& point)
+{
+	return (point.x <= bbox.max.x) &&
+		(point.y <= bbox.max.y) &&
+		(point.z <= bbox.max.z) &&
+		(point.x >= bbox.min.x) &&
+		(point.y >= bbox.min.y) &&
+		(point.z >= bbox.min.z);
+}
+
 #endif

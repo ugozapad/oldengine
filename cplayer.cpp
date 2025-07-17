@@ -19,7 +19,7 @@ CPlayer::CPlayer()
 #ifdef _DEBUG
 	debugPlayer = false;
 
-	CVisual_Sprite::debugDrawRect = true;
+	CVisual_Sprite::debugDrawRect = false;
 #endif // _DEBUG
 }
 

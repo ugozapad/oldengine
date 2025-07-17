@@ -10,6 +10,7 @@ enum EObjectType
 	OBJTYPE_OBJ,
 	OBJTYPE_PLAYER,
 	OBJTYPE_LEVELCONTROLLER,
+	OBJTYPE_NPC,
 	OBJTYPE_COUNT
 };
 
@@ -29,6 +30,7 @@ public:
 	Vec3 position;
 	Vec3 rotation;
 	float scale;
+	BoundingBox bounds;
 };
 
 class CObjectFactory

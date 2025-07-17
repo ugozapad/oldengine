@@ -41,6 +41,8 @@ public:
 	void InsertObject(CObject* object);
 	void RemoveObject(CObject* object);
 
+	CObject* GetObjectInPoint(Vec3& point);
+
 private:
 	CArray<CObject*> objects;
 };

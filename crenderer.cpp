@@ -288,6 +288,31 @@ void CRenderer::DrawTexture3D(CTexture* texture, float x, float y, float w, floa
 	glEnd();
 }
 
+void CRenderer::DrawBounds2DColoredWire(const BoundingBox& bbox, uint color)
+{
+	SetTexture(NULL);
+
+	glPolygonMode(GL_BACK, GL_LINE);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho((float)viewport.x, (float)viewport.width, (float)viewport.height, (float)viewport.y, -1.0f, 1.0f);
+
+	glPushAttrib(GL_CURRENT_BIT);
+	glColor4ubv((const GLubyte*)&color);
+
+	glBegin(GL_QUADS);
+	glVertex2f(bbox.min.x, bbox.min.y);
+	glVertex2f(bbox.min.x + bbox.max.x, bbox.min.y);
+	glVertex2f(bbox.min.x + bbox.max.x, bbox.min.y + bbox.max.y);
+	glVertex2f(bbox.min.x, bbox.min.y + bbox.max.y);
+	glEnd();
+
+	glPopAttrib();
+
+	glLoadIdentity();
+}
+
 void CRenderer::DrawScreenOverlay(float r, float g, float b, float a)
 {
 	SetAlphaBlend(true);

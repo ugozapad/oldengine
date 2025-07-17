@@ -143,6 +143,7 @@
     <ClCompile Include="..\cgame.cpp" />
     <ClCompile Include="..\cinput.cpp" />
     <ClCompile Include="..\cmodel.cpp" />
+    <ClCompile Include="..\cnpc.cpp" />
     <ClCompile Include="..\cobject.cpp" />
     <ClCompile Include="..\cplayer.cpp" />
     <ClCompile Include="..\crenderer.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\cinput.h" />
     <ClInclude Include="..\cmath.h" />
     <ClInclude Include="..\cmodel.h" />
+    <ClInclude Include="..\cnpc.h" />
     <ClInclude Include="..\cobject.h" />
     <ClInclude Include="..\cplayer.h" />
     <ClInclude Include="..\crenderer.h" />

@@ -184,6 +184,8 @@ public:
     void DrawTexture(CTexture* texture, float x, float y, float w, float h);
     void DrawTexture3D(CTexture* texture, float x, float y, float w, float h);
 
+	void DrawBounds2DColoredWire(const BoundingBox& bbox, uint color);
+
 	// Special Effects
 	void DrawScreenOverlay(float r, float g, float b, float a);
 
